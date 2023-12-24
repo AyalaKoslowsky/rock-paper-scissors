@@ -1,1 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
 
+    <h1>Lets play the game rock paper scissors!</h1>
+    <script>
+        function getComputerChoice() {
+            // chose a random num between 0-2, each num representes one option
+            let num = Math.floor(Math.random() * 3);
+            let choiceArr = ["rock", "paper", "scissors"];
+            return choiceArr[num];
+        }
+
+        function playRound(playerSelection, computerSelection) {
+            let winner = "";
+            playerSelection = playerSelection.toLowerCase();
+        
+            if (playerSelection === computerSelection) {
+                return "tie"
+            }
+
+            // paper wins rock, rock wins scissors, scissors wins paper
+            else if ((playerSelection == "paper" && computerSelection == "rock") ||
+            (playerSelection == "scissors" && computerSelection == "paper") ||
+            (playerSelection == "rock" && computerSelection == "scissors")) {
+                winner = "player";
+            }
+
+            else if (playerSelection == "rock" && computerSelection == "paper" ||
+            playerSelection == "paper" && computerSelection == "scissors" ||
+            playerSelection == "scissors" && computerSelection == "rock") {
+                winner = "computer"
+            }
+
+            return winner;
+        }
+
+        function game() {
+            let currWinner = "";
+            let playerScore = 0;
+            let computerScore = 0;
+
+            for (i=1; i<=5; i++) {
+                const playerSelection = prompt("Enter one of the options - rock, paper, scissors: ");
+                const computerSelection = getComputerChoice();
+                currWinner = playRound(playerSelection, computerSelection);
+                console.log(currWinner);
+                
+                // if both are the same - play another round
+                if (currWinner === "tie") {
+                    i-=1;
+                }
+                else if (currWinner === "player") {
+                    playerScore++;
+                }
+                else if (currWinner === "computer") {
+                    computerScore++;
+                }
+            }
+
+            if (playerScore > computerScore) {
+                return "You Win!";
+            }
+            // there is never a tie in 5 rounds
+            else {
+                return "You Lose!";
+            }
+        }
+        
+        console.log(game());
+        
+    </script>
+</body>
+</html>
